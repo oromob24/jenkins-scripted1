@@ -1,4 +1,3 @@
-input message: 'Ingresa el Numero de Tarjeta', parameters: [string(defaultValue: '4111000000000000', description: 'Numero de Tarjeta', name: 'cardNumber')]
 node('dev')
 {
    stage('Get GIT repository')
@@ -12,6 +11,8 @@ node('dev')
     sh 'mvn test'
    }
    stage('Execute program'){
+    input message: 'Ingresa el Numero de Tarjeta', parameters: [string(defaultValue: '4111000000000000', description: 'Numero de Tarjeta', name: 'cardNumber')]
+
     echo 'Executing then Java program'
     sh "mvn exec:java -Dexec.mainClass='com.apasoft.CardProcessor' -Dexec.args='${cardNumber}'"
     stash includes: 'target/**', name: 'target-jar1'
